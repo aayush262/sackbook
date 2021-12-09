@@ -1,14 +1,26 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "nodemon server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
+    "axios": "^0.24.0",
+    "bcrypt": "^5.0.1",
+    "cogo-toast": "^4.2.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "js-cookie": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.14",
     "next": "latest",
+    "nookies": "^2.5.2",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "reactjs-popup": "^2.0.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",
