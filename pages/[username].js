@@ -2,12 +2,13 @@ import React from 'react';
 import baseUrl from './../util/baseUrl';
 import axios from 'axios';
 import { parseCookies, destroyCookie } from 'nookies';
+import { Profile } from './../components/profile';
 
-const ProfilePage = ({ user, profile, followerStats }) => {
+export const Posts = React.createContext();
+
+const ProfilePage = ({ user, profile, followerStats, postsData }) => {
     return <>
-        {user.username}
-        {profile.user.username}
-        <p>{followerStats.followers.length} Followers</p>
+        <Posts.Provider value={postsData}><Profile postsData={postsData} user={user} profile={profile} followerStats={followerStats}></Profile></Posts.Provider>
     </>
 }
 export default ProfilePage;
@@ -31,18 +32,25 @@ export async function getServerSideProps(context) {
                 Authorization: token
             }
         })
-        const res = await axios.get(`${baseUrl}/api/profile/${context.params.username}`,{
-            headers:{
+        const res = await axios.get(`${baseUrl}/api/profile/${context.params.username}`, {
+            headers: {
                 Authorization: token
             }
         })
+        const response = await axios.get(`${baseUrl}/api/profile/post/${context.params.username}`, {
+            headers: {
+                Authorization: token
+            }
+        })
+        const posts = response.data.posts;
         const profile = res.data.profile;
         const followerStats = res.data.followerStats;
         return {
             props: {
                 user: data.user,
                 profile,
-                followerStats
+                followerStats,
+                postsData: posts
             }
         }
     } catch (err) {

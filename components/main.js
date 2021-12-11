@@ -5,7 +5,7 @@ import cookies from 'js-cookie';
 import { PostHeader } from './../components/postHeader';
 import { CreatePost } from './../components/createPost';
 import { Posts } from './../components/posts';
-import Link from 'next/link';
+import { SideBar } from './sideBar';
 
 export const Main = ({ user, postsData }) => {
 
@@ -53,22 +53,7 @@ export const Main = ({ user, postsData }) => {
         <>
             <div className="flex justify-center w-screen h-screen px-4 text-gray-700">
                 <div className="flex w-full max-w-screen-lg">
-                    <div className="flex flex-col w-64 py-4 pr-3">
-                        <a className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Home</a>
-                        <a className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Discover</a>
-                        <a className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Notifications</a>
-                        <a className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Inbox</a>
-                        <a className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Saved Posts</a>
-                        <a className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Groups</a>
-                        <a className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" href="#">Profile</a>
-                        <a className="flex px-3 py-2 mt-2 mt-auto text-lg rounded-sm font-medium hover:bg-gray-200" href="#">
-                            <img src={user.avatarUrl} className="flex-shrink-0 w-10 h-10 bg-gray-400 rounded-full" />
-                            <div className="flex flex-col ml-2">
-                                <Link href ={`/${user.username}`} className="mt-1 text-sm font-semibold leading-none">{user.username}</Link>
-                                <span className="mt-1 text-xs leading-none">@{user.username}</span>
-                            </div>
-                        </a>
-                    </div>
+                   <SideBar user={user} />
                     <div className="flex flex-col flex-grow border-l border-r border-gray-300">
                         <PostHeader />
                         <div className="flex-grow h-0 overflow-auto">
