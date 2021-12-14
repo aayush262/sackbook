@@ -3,6 +3,12 @@ const PostModel = require('./../models/postModel');
 const UserModel = require('./../models/userModel')
 const authMiddleware = require('./../middlewares/authMiddleware');
 const uuid = require('uuid').v4;
+const {
+    newLikeNotification,
+    removeLikeNotification,
+    newCommentNotification,
+    removeCommentNotification
+} = require('./../utilServer/notificationAction');
 
 router.get('/', authMiddleware, async (req, res, next) => {
     const { pageNumber } = req.query;
@@ -137,7 +143,7 @@ router.delete('/:postId', authMiddleware, async (req, res, next) => {
         })
     }
 })
-
+//LIKING A POST
 router.post('/like/:postId', authMiddleware, async (req, res, next) => {
     const postId = req.params.postId;
     const userId = req.userId;
@@ -151,6 +157,9 @@ router.post('/like/:postId', authMiddleware, async (req, res, next) => {
             user: userId
         })
         await post.save()
+        if (post.user.toString() !== userId) {
+            await newLikeNotification(userId, postId, post.user.toString())
+        }
         return res.status(201).json({
             msg: 'Post Liked'
         })
@@ -160,7 +169,7 @@ router.post('/like/:postId', authMiddleware, async (req, res, next) => {
         })
     }
 })
-
+//UNLIKING A POST
 router.post('/unlike/:postId', authMiddleware, async (req, res, next) => {
     const postId = req.params.postId;
     const userId = req.userId;
@@ -173,6 +182,9 @@ router.post('/unlike/:postId', authMiddleware, async (req, res, next) => {
         const index = post.likes.map(like => like.user.toString()).indexOf(userId);
         await post.likes.splice(index, 1);
         await post.save();
+        if (post.user.toString() !== userId) {
+            await removeLikeNotification(userId, postId, post.user.toString());
+        }
         return res.status(201).json({
             msg: 'Post Unliked'
         })
@@ -206,6 +218,7 @@ router.get('/like/:postId', authMiddleware, async (req, res, next) => {
 router.post('/comment/:postId', authMiddleware, async (req, res, next) => {
     const postId = req.params.postId;
     const text = req.body.text;
+    const { userId } = req;
     if (text.length < 1) return res.status(401).json({
         msg: 'Text required'
     })
@@ -217,11 +230,17 @@ router.post('/comment/:postId', authMiddleware, async (req, res, next) => {
         const newComment = {
             _id: uuid(),
             text,
-            user: req.userId,
+            user: userId,
             date: Date.now()
         }
         await post.comments.unshift(newComment);
         await post.save();
+
+        //Notifying to the user
+        if (post.user.toString() !== userId) {
+            await newCommentNotification(userId, postId, newComment._id, text, post.user.toString());
+        }
+
         return res.status(201).json({
             msg: 'Comment Created',
             id: newComment._id
@@ -251,6 +270,15 @@ router.delete('/comment/:postId/:commentId', authMiddleware, async (req, res, ne
             const index = post.comments.map(comment => comment._id.toString()).indexOf(commentId);
             await post.comments.splice(index, 1);
             await post.save();
+            //removing comment notification
+            if (post.user.toString() !== userId) {
+                await removeCommentNotification(
+                    userId,
+                    postId,
+                    commentId,
+                    post.user.toSting()
+                )
+            }
             return res.status(201).json({
                 msg: "Comment Deleted Successfully"
             })

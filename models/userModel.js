@@ -28,6 +28,10 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     },
+    unreadNotifications:{
+        type: Boolean,
+        default: false
+    },
     role: {
         type: String,
         default:'user',

@@ -1,5 +1,8 @@
 const Router = require('express').Router()
 const UserModel = require('./../models/userModel');
+const ProfileModel = require('./../models/profileModel');
+const FollowerModel = require('./../models/followerModel');
+const NotificationModel = require('./../models/notificationModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -28,7 +31,20 @@ Router.post('/', async (req, res) => {
         const passwordHash = await bcrypt.hash(password, 10);
         newUser.password = passwordHash
         const saved = await newUser.save()
-        const token = createToken({userId: saved._id})
+        await new ProfileModel({
+            user: saved._id,
+            bio: ''
+        }).save()
+        await new FollowerModel({
+            user: saved._id,
+            followers: [],
+            following: []
+        }).save()
+        await new NotificationModel({
+            user: saved._id,
+            notifications: []
+        }).save()
+        const token = createToken({ userId: saved._id })
         return res.status(201).json({
             msg: 'Successfully Registered',
             token

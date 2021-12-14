@@ -111,6 +111,9 @@ export const Profile = ({ user, profile, followerStats }) => {
                                                     An artist of considerable range, Jenna the name taken by
                                                     Melbourne-raised, Brooklyn-based
                                                 </p>
+                                                <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
+                                                    Recent Posts
+                                                </p>
                                                 <div className="flex flex-col flex-grow border-l border-r border-gray-300">
                                                     <ProfilePosts/>
                                                 </div>
