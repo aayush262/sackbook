@@ -12,8 +12,7 @@ export const AuthForm = ({ children }) => {
             <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
                 <div className="flex flex-col overflow-y-auto md:flex-row">
                     {isSignUp || <div className="h-32 md:h-auto md:w-1/2">
-                        <img aria-hidden="true" className="object-cover w-full h-full dark:hidden" src="https://www.instagram.com/static/images/homepage/home-phones@2x.png/9364675fb26a.png" alt="Office" />
-                        <img aria-hidden="true" className="hidden object-cover w-full h-full dark:block" src="../assets/img/login-office-dark.jpeg" alt="Office" />
+                        <img aria-hidden="true" className="object-cover w-full h-full dark:hidden" src="https://cdn.discordapp.com/attachments/816676404879556621/920617264062009354/Capture.PNG" alt="Office" />
                     </div>}
                     <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
                         <div className="w-full">
@@ -46,8 +45,8 @@ export const AuthForm = ({ children }) => {
                         </div>
                     </div>
                     {isSignUp && <div className="h-32 md:h-auto md:w-1/2">
-                        <img aria-hidden="true" className="object-cover w-full h-full dark:hidden" src="https://www.instagram.com/static/images/homepage/home-phones@2x.png/9364675fb26a.png" alt="Office" />
-                        <img aria-hidden="true" className="hidden object-cover w-full h-full dark:block" src="../assets/img/login-office-dark.jpeg" alt="Office" />
+                        <img aria-hidden="true" className="object-cover w-full h-full dark:hidden" src="https://cdn.discordapp.com/attachments/816676404879556621/920610939051581450/Capture.PNG" alt="Office" />
+
                     </div>}
                 </div>
             </div>

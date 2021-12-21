@@ -1,7 +1,20 @@
 import 'tailwindcss/tailwind.css'
 import Head from 'next/head';
+import Router from 'next/router';
+import nProgress from 'nprogress';
+import "nprogress/nprogress.css";
 
 function MyApp({ Component, pageProps }) {
+
+  Router.events.on('routeChangeStart', () => {
+    nProgress.start()
+  })
+  Router.events.on('routeChangeComplete', () => {
+    nProgress.done()
+  })
+  Router.events.on('routeChangeError', () => {
+    nProgress.done()
+  })
   return <div style={{ fontFamily: `'Bangers', 'cursive'` }}>
     <Head>
       <title>Create Next App</title>

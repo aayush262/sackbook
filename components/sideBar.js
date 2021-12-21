@@ -1,12 +1,14 @@
 import React from "react";
 import Link from 'next/link';
+import { useRouter } from "next/router";
 
 export const SideBar = ({ user }) => {
+    const router= useRouter();
     return (
         <div className="flex flex-col w-64 py-4 pr-3">
-            <div className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" >Home</div>
+            <div onClick={()=>router.push('/')} className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" >Home</div>
             <div className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" >Discover</div>
-            <div className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" >Notifications</div>
+            <div  onClick={()=>router.push('/notification')} className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" >Notifications</div>
             <div className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" >Inbox</div>
             <div className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" >Saved Posts</div>
             <div className="px-3 py-2 mt-2 text-lg font-medium rounded-sm hover:bg-gray-300" >Groups</div>

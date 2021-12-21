@@ -270,15 +270,15 @@ router.post('/unfollow/:userToUnfollowId', authMiddleware, async (req, res, next
     }
 })
 
-router.get('/notify/:username', authMiddleware, async (req, res) => {
-    const user = await UserModel.findOne({ username: req.params.username.toString() });
-    await new notificationModel({
-        user: user._id,
-        notifications: []
-    }).save();
-    return res.status(201).json({
-        msg: 'success'
-    })
-})
+// router.get('/notify/:username', authMiddleware, async (req, res) => {
+//     const user = await UserModel.findOne({ username: req.params.username.toString() });
+//     await new notificationModel({
+//         user: user._id,
+//         notifications: []
+//     }).save();
+//     return res.status(201).json({
+//         msg: 'success'
+//     })
+// })
 
 module.exports = router;
